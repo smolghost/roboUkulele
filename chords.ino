@@ -1,3 +1,14 @@
+/*
+ * Movement and Motion
+ * Elliot Grover
+ * DIGF-1006FA Physical Computing
+ * OCAD University
+ * Created on: February 7th 2017
+ * Based on:
+ * Motor Shield - Arduino Playground - http://playground.arduino.cc/Main/AdafruitMotorShield
+ */
+
+
 // Arduino pins for the shift register
 #define MOTORLATCH 12
 #define MOTORCLK 4
@@ -36,49 +47,21 @@ void setup()
 
 
 void loop()
-{
-  // Suppose there is a relay, or light or solenoid
-  // connected to M3_A and GND.
-  // Note that the 'speed' (the PWM, the intensity) 
-  // is for both M3_A and M3_B.
-  // The output is a push-pull output (half bridge), 
-  // so it can also be used to drive something low.
-  // The 'speed' (the PWM, the intensity) can be set 
-  // to zero, that would make the output disabled 
-  // and floating.
+{  // Sending output to the solenoids associated with specific chords
   motor_output(MOTOR3_A, HIGH, 255);
-  delay(700);
+  delay(1000);
   motor_output(MOTOR3_A, LOW, 255);
-  delay(200);
+  delay(1000);
   motor_output(MOTOR4_A, HIGH, 255);
-  delay(700);
+  delay(1000);
   motor_output(MOTOR4_A, LOW, 255);
-  delay(200);
+  delay(1000);
   motor_output(MOTOR1_A, HIGH, 255);
-  delay(700);
+  delay(1000);
   motor_output(MOTOR1_A, LOW, 255);
-  delay(200);
+  delay(1000);
 }
 
-
-// Initializing
-// ------------
-// There is no initialization function.
-//
-// The shiftWrite() has an automatic initializing.
-// The PWM outputs are floating during startup, 
-// that's okay for the Motor Shield, it stays off.
-// Using analogWrite() without pinMode() is valid.
-//
-
-
-// ---------------------------------
-// motor
-//
-// Select the motor (1-4), the command, 
-// and the speed (0-255).
-// The commands are: FORWARD, BACKWARD, BRAKE, RELEASE.
-//
 void motor(int nMotor, int command, int speed)
 {
   int motorA, motorB;
@@ -110,31 +93,7 @@ void motor(int nMotor, int command, int speed)
 }
 
 
-// ---------------------------------
-// motor_output
-//
-// The function motor_ouput uses the motor driver to
-// drive normal outputs like lights, relays, solenoids, 
-// DC motors (but not in reverse).
-//
-// It is also used as an internal helper function 
-// for the motor() function.
-//
-// The high_low variable should be set 'HIGH' 
-// to drive lights, etc.
-// It can be set 'LOW', to switch it off, 
-// but also a 'speed' of 0 will switch it off.
-//
-// The 'speed' sets the PWM for 0...255, and is for 
-// both pins of the motor output.
-//   For example, if motor 3 side 'A' is used to for a
-//   dimmed light at 50% (speed is 128), also the 
-//   motor 3 side 'B' output will be dimmed for 50%.
-// Set to 0 for completelty off (high impedance).
-// Set to 255 for fully on.
-// Special settings for the PWM speed:
-//    Set to -1 for not setting the PWM at all.
-//
+// Defines the motor ouput via the motor shield
 void motor_output (int output, int high_low, int speed)
 {
   int motorPWM;
@@ -179,20 +138,6 @@ void motor_output (int output, int high_low, int speed)
   }
 }
 
-
-// ---------------------------------
-// shiftWrite
-//
-// The parameters are just like digitalWrite().
-//
-// The output is the pin 0...7 (the pin behind 
-// the shift register).
-// The second parameter is HIGH or LOW.
-//
-// There is no initialization function.
-// Initialization is automatically done at the first
-// time it is used.
-//
 void shiftWrite(int output, int high_low)
 {
   static int latch_copy;
